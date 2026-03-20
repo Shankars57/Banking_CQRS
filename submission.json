@@ -60,51 +60,51 @@
     "commandSide": [
       {
         "method": "POST",
-        "path": "/accounts",
+        "path": "/api/accounts",
         "description": "Create a new bank account"
       },
       {
         "method": "POST",
-        "path": "/accounts/:accountId/deposits",
+        "path": "/api/accounts/:accountId/deposits",
         "description": "Deposit money into an account"
       },
       {
         "method": "POST",
-        "path": "/accounts/:accountId/withdrawals",
+        "path": "/api/accounts/:accountId/withdrawals",
         "description": "Withdraw money from an account"
       },
       {
         "method": "POST",
-        "path": "/accounts/:accountId/close",
+        "path": "/api/accounts/:accountId/close",
         "description": "Close an account"
       }
     ],
     "querySide": [
       {
         "method": "GET",
-        "path": "/accounts/:accountId",
+        "path": "/api/accounts/:accountId",
         "description": "Read account summary from projection"
       },
       {
         "method": "GET",
-        "path": "/accounts/:accountId/transactions?page=1&pageSize=10",
+        "path": "/api/accounts/:accountId/transactions?page=1&pageSize=10",
         "description": "Read paginated transaction history from projection"
       },
       {
         "method": "GET",
-        "path": "/accounts/:accountId/events",
+        "path": "/api/accounts/:accountId/events",
         "description": "Read full event stream for audit"
       },
       {
         "method": "GET",
-        "path": "/accounts/:accountId/balance-at?timestamp=2026-03-20T23:59:59.000Z",
+        "path": "/api/accounts/:accountId/balance-at?timestamp=2026-03-20T23:59:59.000Z",
         "description": "Read account balance at a point in time"
       }
     ],
     "system": [
       {
         "method": "POST",
-        "path": "/projections/rebuild",
+        "path": "/api/projections/rebuild",
         "description": "Rebuild read models from the event store"
       }
     ]

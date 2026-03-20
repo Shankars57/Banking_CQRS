@@ -522,6 +522,7 @@ export const getTransactionHistory = async (
   return {
     accountId: normalizedAccountId,
     page: pagination.page,
+    currentPage: pagination.page,
     pageSize: pagination.pageSize,
     total: Number(count),
     items: rows.map(mapTransactionHistory),
@@ -566,3 +567,4 @@ export const getBalanceAtTimestamp = async (accountId, timestamp) => {
     timestamp: asOfTimestamp.toISOString(),
   };
 };
+
