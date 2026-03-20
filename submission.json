@@ -1,0 +1,120 @@
+
+[
+  "--- Events DB ----" ,
+  {
+    "account": {
+      "status": "OPEN",
+      "balance": 1000.0,
+      "currency": "INR",
+      "ownerName": "Shankar"
+    },
+    "history": [
+      {
+        "amount": 250.0,
+        "balance": 1250.0,
+        "description": "Cash deposit"
+      }
+    ]
+  },
+  {
+    "account": {
+      "status": "OPEN",
+      "balance": 0,
+      "currency": "INR",
+      "accountId": "acc-test-001",
+      "ownerName": "Test User"
+    }
+  },
+  {
+    "account": {
+      "status": "OPEN",
+      "balance": 0,
+      "currency": "INR",
+      "accountId": "acc-test-002",
+      "ownerName": "Test User"
+    }
+  },
+  {
+    "account": {
+      "status": "CLOSED",
+      "currency": "INR",
+      "accountId": "acc-smoke-1773751474550",
+      "ownerName": "Smoke Test",
+      "finalBalance": 375
+    },
+    "history": [
+      {
+        "transactionId": "txn-dep-1773751474550",
+        "amount": 500,
+        "description": "Initial test deposit",
+        "balanceAfter": 500
+      },
+      {
+        "transactionId": "txn-wd-1773751474550",
+        "amount": 125,
+        "description": "ATM test withdrawal",
+        "balanceAfter": 375
+      }
+    ]
+  },
+  {
+    "account": {
+      "status": "CLOSED",
+      "currency": "INR",
+      "accountId": "acc-smoke-1773751602610",
+      "ownerName": "Smoke Test",
+      "finalBalance": 375
+    },
+    "history": [
+      {
+        "transactionId": "txn-dep-1773751602610",
+        "amount": 500,
+        "description": "Initial test deposit",
+        "balanceAfter": 500
+      },
+      {
+        "transactionId": "txn-wd-1773751602610",
+        "amount": 125,
+        "description": "ATM test withdrawal",
+        "balanceAfter": 375
+      }
+    ]
+  },
+  {
+    "account": {
+      "status": "OPEN",
+      "balance": 200,
+      "currency": "INR",
+      "accountId": "acc-rules-1773751635504",
+      "ownerName": "Rules Test"
+    },
+    "history": [
+      {
+        "transactionId": "txn-rules-1773751635504",
+        "amount": 200,
+        "description": "Replay test deposit",
+        "balanceAfter": 200
+      }
+    ]
+  },
+  {
+    "account": {
+      "status": "CLOSED",
+      "currency": "INR",
+      "accountId": "acc-rules-1773751665940",
+      "ownerName": "Rules Test",
+      "finalBalance": 200
+    },
+    "history": [
+      {
+        "transactionId": "txn-rules-1773751665940",
+        "amount": 200,
+        "description": "Replay test deposit",
+        "balanceAfter": 200
+      }
+    ]
+  }
+
+
+  
+]
