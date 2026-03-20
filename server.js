@@ -10,8 +10,8 @@ const app = express();
 const PORT = process.env.API_PORT || process.env.PORT || 3030;
 
 app.use(express.json());
-app.use("/accounts", accountRouter);
-app.use("/projections", projectionRouter);
+app.use("/api/accounts", accountRouter);
+app.use("/api/projections", projectionRouter);
 
 app.get("/", (req, res) => {
   res.send("<h1>Server is running</h1>");
