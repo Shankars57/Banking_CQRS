@@ -1,120 +1,134 @@
-
-[
-  "--- Events DB ----" ,
-  {
-    "account": {
-      "status": "OPEN",
-      "balance": 1000.0,
-      "currency": "INR",
-      "ownerName": "Shankar"
-    },
-    "history": [
-      {
-        "amount": 250.0,
-        "balance": 1250.0,
-        "description": "Cash deposit"
-      }
-    ]
-  },
-  {
-    "account": {
-      "status": "OPEN",
-      "balance": 0,
-      "currency": "INR",
-      "accountId": "acc-test-001",
-      "ownerName": "Test User"
+{
+  "projectName": "Banking CQRS Backend",
+  "repository": "https://github.com/Shankars57/Banking_CQRS",
+  "baseUrl": "http://localhost:3030",
+  "summary": "A banking backend built with Node.js, Express, PostgreSQL, Sequelize, and Docker using Event Sourcing and CQRS. The event store is the source of truth, projections serve read queries, snapshots improve replay performance, and transaction IDs provide idempotency for monetary commands.",
+  "techStack": [
+    "Node.js",
+    "Express",
+    "PostgreSQL",
+    "Sequelize",
+    "Docker"
+  ],
+  "architecture": {
+    "patterns": [
+      "Event Sourcing",
+      "CQRS"
+    ],
+    "eventStoreTable": "events",
+    "projectionTables": [
+      "account_summaries",
+      "transaction_history"
+    ],
+    "snapshotTable": "snapshots",
+    "snapshotStrategy": {
+      "interval": 50,
+      "loadApproach": "Load latest snapshot and replay only the remaining events"
     }
   },
-  {
-    "account": {
-      "status": "OPEN",
-      "balance": 0,
-      "currency": "INR",
-      "accountId": "acc-test-002",
-      "ownerName": "Test User"
-    }
-  },
-  {
-    "account": {
-      "status": "CLOSED",
-      "currency": "INR",
-      "accountId": "acc-smoke-1773751474550",
-      "ownerName": "Smoke Test",
-      "finalBalance": 375
-    },
-    "history": [
+  "commands": [
+    "Create Account",
+    "Deposit Money",
+    "Withdraw Money",
+    "Close Account"
+  ],
+  "queries": [
+    "Get account summary",
+    "Get transaction history with pagination",
+    "Get all account events",
+    "Get balance at a specific timestamp"
+  ],
+  "businessRules": [
+    "Cannot create duplicate account",
+    "Cannot withdraw more than balance",
+    "Cannot operate on a closed account",
+    "Transaction IDs must be unique for idempotent monetary commands"
+  ],
+  "events": [
+    "AccountCreated",
+    "MoneyDeposited",
+    "MoneyWithdrawn",
+    "AccountClosed"
+  ],
+  "apiEndpoints": {
+    "health": [
       {
-        "transactionId": "txn-dep-1773751474550",
-        "amount": 500,
-        "description": "Initial test deposit",
-        "balanceAfter": 500
+        "method": "GET",
+        "path": "/health"
+      }
+    ],
+    "commandSide": [
+      {
+        "method": "POST",
+        "path": "/accounts",
+        "description": "Create a new bank account"
       },
       {
-        "transactionId": "txn-wd-1773751474550",
-        "amount": 125,
-        "description": "ATM test withdrawal",
-        "balanceAfter": 375
-      }
-    ]
-  },
-  {
-    "account": {
-      "status": "CLOSED",
-      "currency": "INR",
-      "accountId": "acc-smoke-1773751602610",
-      "ownerName": "Smoke Test",
-      "finalBalance": 375
-    },
-    "history": [
-      {
-        "transactionId": "txn-dep-1773751602610",
-        "amount": 500,
-        "description": "Initial test deposit",
-        "balanceAfter": 500
+        "method": "POST",
+        "path": "/accounts/:accountId/deposits",
+        "description": "Deposit money into an account"
       },
       {
-        "transactionId": "txn-wd-1773751602610",
-        "amount": 125,
-        "description": "ATM test withdrawal",
-        "balanceAfter": 375
+        "method": "POST",
+        "path": "/accounts/:accountId/withdrawals",
+        "description": "Withdraw money from an account"
+      },
+      {
+        "method": "POST",
+        "path": "/accounts/:accountId/close",
+        "description": "Close an account"
+      }
+    ],
+    "querySide": [
+      {
+        "method": "GET",
+        "path": "/accounts/:accountId",
+        "description": "Read account summary from projection"
+      },
+      {
+        "method": "GET",
+        "path": "/accounts/:accountId/transactions?page=1&pageSize=10",
+        "description": "Read paginated transaction history from projection"
+      },
+      {
+        "method": "GET",
+        "path": "/accounts/:accountId/events",
+        "description": "Read full event stream for audit"
+      },
+      {
+        "method": "GET",
+        "path": "/accounts/:accountId/balance-at?timestamp=2026-03-20T23:59:59.000Z",
+        "description": "Read account balance at a point in time"
+      }
+    ],
+    "system": [
+      {
+        "method": "POST",
+        "path": "/projections/rebuild",
+        "description": "Rebuild read models from the event store"
       }
     ]
   },
-  {
-    "account": {
-      "status": "OPEN",
-      "balance": 200,
-      "currency": "INR",
-      "accountId": "acc-rules-1773751635504",
-      "ownerName": "Rules Test"
-    },
-    "history": [
-      {
-        "transactionId": "txn-rules-1773751635504",
-        "amount": 200,
-        "description": "Replay test deposit",
-        "balanceAfter": 200
-      }
-    ]
+  "dockerSetup": {
+    "services": [
+      "app",
+      "db"
+    ],
+    "healthChecks": true,
+    "databaseInitialization": "PostgreSQL schema and sample data are loaded from the seeds directory"
   },
-  {
-    "account": {
-      "status": "CLOSED",
-      "currency": "INR",
-      "accountId": "acc-rules-1773751665940",
-      "ownerName": "Rules Test",
-      "finalBalance": 200
-    },
-    "history": [
-      {
-        "transactionId": "txn-rules-1773751665940",
-        "amount": 200,
-        "description": "Replay test deposit",
-        "balanceAfter": 200
-      }
-    ]
+  "implementationHighlights": [
+    "Write operations append immutable events instead of directly mutating state",
+    "Read APIs use projections for fast queries",
+    "Aggregate state is rebuilt from snapshot plus remaining events",
+    "Deposit and withdrawal commands are idempotent using transactionId",
+    "Projection rebuild endpoint supports recovery of read models"
+  ],
+  "status": {
+    "commandApisImplemented": true,
+    "queryApisImplemented": true,
+    "projectionRebuildImplemented": true,
+    "snapshottingImplemented": true,
+    "dockerized": true
   }
-
-
-  
-]
+}
